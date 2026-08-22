@@ -1,4 +1,5 @@
 .env
+k8s/cloudflared-secret.yaml
 .venv/
 venv/
 __pycache__/
