@@ -71,6 +71,16 @@ docker build -t sourabhdey21/huntmail:latest .
 docker push sourabhdey21/huntmail:latest
 ```
 
+Kubernetes:
+
+```bash
+oc apply -f k8s/
+kubectl create secret generic huntmail-smtp -n huntmail --from-env-file=.env --dry-run=client -o yaml | kubectl apply -f -
+kubectl -n huntmail rollout status deployment/huntmail
+```
+
+Edit `k8s/ingress.yaml` and set `host` to your DNS name. The app listens on port 8080.
+
 Deploy on OpenShift (uses `.env` for the SMTP secret, never bakes it into the image):
 
 ```bash
