@@ -27,9 +27,13 @@ spec:
       labels:
         app: huntmail
     spec:
+      securityContext:
+        runAsNonRoot: true
+        seccompProfile:
+          type: RuntimeDefault
       containers:
         - name: huntmail
-          image: docker.io/sourabhdey21/huntmail:latest
+          image: docker.io/sourabhdey21700/huntmail:latest
           imagePullPolicy: Always
           ports:
             - name: http
@@ -78,6 +82,14 @@ spec:
             limits:
               cpu: "1"
               memory: 512Mi
+          securityContext:
+            allowPrivilegeEscalation: false
+            runAsNonRoot: true
+            capabilities:
+              drop:
+                - ALL
+            seccompProfile:
+              type: RuntimeDefault
       volumes:
         - name: data
           persistentVolumeClaim:
