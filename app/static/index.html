@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>HuntMail</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=Source+Serif+4:opsz,wght@8..60,500;8..60,600&family=Sora:wght@400;500;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/static/style.css" />
+</head>
+<body>
+  <div class="shell">
+    <aside class="rail">
+      <div class="brand">
+        <span class="mark">HM</span>
+        <div>
+          <strong>HuntMail</strong>
+          <small>Job outreach desk</small>
+        </div>
+      </div>
+      <nav>
+        <button class="nav-btn active" data-view="inbox">Inbox</button>
+        <button class="nav-btn" data-view="import">Import job</button>
+        <button class="nav-btn" data-view="watch">Watchers</button>
+        <button class="nav-btn" data-view="profile">Profile</button>
+      </nav>
+      <div class="mail-pill" id="mail-status">Checking mail…</div>
+    </aside>
+
+    <main>
+      <header class="top">
+        <div>
+          <p class="kicker" id="view-kicker">Inbox</p>
+          <h1 id="view-title">Cloud, DevOps, and admin roles</h1>
+        </div>
+        <div class="stats" id="stats"></div>
+      </header>
+
+      <section class="view active" id="view-inbox">
+        <div class="role-bar" id="role-bar"></div>
+        <div class="split">
+          <div class="panel list-panel">
+            <div class="toolbar">
+              <input id="job-filter" type="search" placeholder="Filter AWS, Azure, OpenShift…" />
+              <button class="ghost" id="refresh-jobs">Load matching jobs</button>
+            </div>
+            <div id="job-list" class="job-list"></div>
+          </div>
+          <div class="panel detail-panel" id="job-detail">
+            <div class="empty">Select a job to review the recruiter email and draft.</div>
+          </div>
+        </div>
+      </section>
+
+      <section class="view" id="view-import">
+        <div class="import-grid">
+          <div class="panel form-panel">
+            <p class="lede">
+              Paste the LinkedIn job text. HuntMail cleans the title, finds the
+              recruiter email, and writes a professional application. The URL
+              alone is not enough.
+            </p>
+            <label>Job URL <span class="hint">(optional)</span></label>
+            <input id="import-url" type="url" placeholder="https://www.linkedin.com/jobs/view/…" />
+            <label>Job posting text</label>
+            <textarea id="import-text" rows="14" placeholder="Paste the job title, company, location, description, and any recruiter email."></textarea>
+            <label>Resume attachment</label>
+            <div class="resume-box">
+              <input id="import-resume" type="file" accept=".pdf,.doc,.docx" />
+              <p class="hint" id="import-resume-name">No resume loaded yet. Upload a PDF to attach it when you send.</p>
+            </div>
+            <div class="actions">
+              <button class="primary" id="import-btn">Import and draft</button>
+            </div>
+          </div>
+          <div class="panel letter-panel" id="import-preview">
+            <div class="empty">Paste a job on the left to preview the professional email.</div>
+          </div>
+        </div>
+      </section>
+
+      <section class="view" id="view-watch">
+        <div class="panel form-panel">
+          <p class="lede">
+            Watch public boards (RemoteOK and Arbeitnow) for keywords. These
+            boards rarely include recruiter emails, so most matches still need
+            a pasted LinkedIn contact before you can send.
+          </p>
+          <div class="row">
+            <div>
+              <label>Keywords</label>
+              <input id="watch-keywords" placeholder="openshift, linux administrator" />
+            </div>
+            <div>
+              <label>Location filter</label>
+              <input id="watch-location" placeholder="remote or city" />
+            </div>
+          </div>
+          <div class="actions">
+            <button class="primary" id="watch-add">Add watcher</button>
+            <button class="ghost" id="watch-run">Run now</button>
+          </div>
+          <div id="watcher-list" class="watcher-list"></div>
+        </div>
+      </section>
+
+      <section class="view" id="view-profile">
+        <form class="panel form-panel" id="profile-form">
+          <p class="lede">
+            This profile is used to tailor every outreach email. Your Gmail
+            app password stays in the local <code>.env</code> file, not here.
+          </p>
+          <label>Full name</label>
+          <input name="full_name" />
+          <label>Headline</label>
+          <input name="headline" placeholder="Backend engineer, 5 years" />
+          <label>Skills <span class="hint">(comma separated — matched against each job)</span></label>
+          <input name="skills" />
+          <label>Default pitch</label>
+          <textarea name="pitch" rows="6"></textarea>
+          <label>Resume (attached to every application)</label>
+          <div class="resume-box">
+            <input name="resume" type="file" accept=".pdf,.doc,.docx" />
+            <p class="hint" id="resume-name"></p>
+          </div>
+          <button class="primary" type="submit">Save profile</button>
+        </form>
+      </section>
+    </main>
+  </div>
+  <div id="toast" hidden></div>
+  <div id="sent-modal" class="modal" hidden>
+    <div class="modal-card">
+      <p class="kicker">Sent</p>
+      <h2>Message has been sent</h2>
+      <p class="lede" id="sent-summary"></p>
+      <button class="primary" id="sent-close">Done</button>
+    </div>
+  </div>
+  <script src="/static/app.js"></script>
+</body>
+</html>
