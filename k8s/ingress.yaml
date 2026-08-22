@@ -6,9 +6,9 @@ metadata:
   labels:
     app: huntmail
   annotations:
-    nginx.ingress.kubernetes.io/ssl-redirect: "true"
+    route.openshift.io/termination: edge
 spec:
-  ingressClassName: nginx
+  ingressClassName: openshift-default
   rules:
     - host: huntmail.coderift.fun
       http:
