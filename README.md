@@ -61,3 +61,20 @@ Open [http://127.0.0.1:8000](http://127.0.0.1:8000).
 4. **Watchers** — optional keyword alerts from public remote job boards.
 
 Mail never leaves this computer except the one message you choose to send through Gmail.
+
+## Docker and OpenShift
+
+Image: `docker.io/sourabhdey21/huntmail:latest`
+
+```bash
+docker build -t sourabhdey21/huntmail:latest .
+docker push sourabhdey21/huntmail:latest
+```
+
+Deploy on OpenShift (uses `.env` for the SMTP secret, never bakes it into the image):
+
+```bash
+oc login
+chmod +x openshift/deploy.sh
+./openshift/deploy.sh
+```

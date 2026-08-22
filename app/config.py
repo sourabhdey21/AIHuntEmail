@@ -4,11 +4,11 @@ from dotenv import load_dotenv
 import os
 
 ROOT = Path(__file__).resolve().parent.parent
-DATA_DIR = ROOT / "data"
+load_dotenv(ROOT / ".env")
+
+DATA_DIR = Path(os.getenv("HUNTMAIL_DATA", str(ROOT / "data")))
 UPLOAD_DIR = DATA_DIR / "uploads"
 DB_PATH = DATA_DIR / "huntmail.db"
-
-load_dotenv(ROOT / ".env")
 
 DATA_DIR.mkdir(parents=True, exist_ok=True)
 UPLOAD_DIR.mkdir(parents=True, exist_ok=True)

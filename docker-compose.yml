@@ -1,0 +1,16 @@
+services:
+  huntmail:
+    image: sourabhdey21/huntmail:latest
+    build: .
+    ports:
+      - "8000:8080"
+    env_file:
+      - .env
+    environment:
+      PORT: "8080"
+      HUNTMAIL_DATA: /app/data
+    volumes:
+      - huntmail-data:/app/data
+
+volumes:
+  huntmail-data:
